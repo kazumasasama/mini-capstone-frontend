@@ -1,11 +1,31 @@
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/about">About</router-link> |
+    <router-link to="/products">Products</router-link> |
+    <router-link v-if="!isLoggedin" to="/login">Login | </router-link>
+    <router-link v-if="isLoggedin" to="/logout">Logout</router-link> |
+    <router-link to="/signup">Signup</router-link>
   </nav>
+  <p>logged in: {{ isLoggedin }}</p>
   <router-view/>
 </template>
 
+<script>
+  export default {
+    data() {
+      return {
+        isLoggedin: "",
+      }
+    },
+    watch: {
+      $route() {
+        this.isLoggedin = !!localStorage.jwt
+      }
+    }
+  }
+</script>
+  
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
